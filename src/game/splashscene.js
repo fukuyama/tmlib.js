@@ -20,15 +20,31 @@
         _init: function() {
             var width = this.param.width;
             var height = this.param.height;
+            var x = width / 2;
+            var y = height / 2;
+
+            var rw = width / this.splashImage.width;
+            var rh = height / this.splashImage.height;
+            var iw = width;
+            var ih = height;
             
             tm.display.Shape({
+                x: x,
+                y: y,
                 width: width,
                 height: height,
                 bgColor: "white"
-            }).setOrigin(0, 0).addChildTo(this);
+            }).addChildTo(this);
 
-            tm.display.Sprite(this.splashImage, width, height)
-                .setOrigin(0, 0)
+            if (rw > rh) {
+                iw = this.splashImage.width * rh;
+            }
+            if (rw < rh) {
+                ih = this.splashImage.height * rw;
+            }
+
+            tm.display.Sprite(this.splashImage, iw, ih)
+                .setPosition(x,y)
                 .setAlpha(0)
                 .addChildTo(this)
                 .tweener
